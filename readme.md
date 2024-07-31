@@ -7,6 +7,14 @@ https://arxiv.org/abs/2205.07680
 
 ![img](resources/BBDM_architecture.png)
 
+
+## New Configuration for Single GPU (NVIDIA 4090)
+This fork introduces a new configuration file configs/Template-BBDM_512.yaml to enable training the model with a single GPU (NVIDIA 4090). The main differences include:
+
+The resolution is set to 512.
+GPU configuration is specifically set for a single GPU.
+This configuration ensures optimized performance and resource usage when training on a single NVIDIA 4090 GPU.
+
 ## Requirements
 ```commandline
 cond env create -f environment.yml
@@ -62,23 +70,27 @@ dataset_config:
 ### Specify your configuration file
 Modify the configuration file based on our templates in <font color=violet><b>configs/Template-*.yaml</b></font>
 Don't forget to specify your VQGAN checkpoint path and dataset path.
+
+### Add Configuration for Single GPU (NVIDIA 4090)
+To enable training with a single GPU (NVIDIA 4090), use the configuration file configs/Template-BBDM_512.yaml.
+
 ### Specity your training and tesing shell
 Specity your shell file based on our templates in <font color=violet><b>configs/Template-shell.sh</b></font>
 
 If you wish to train from the beginning
 ```commandline
-python3 main.py --config configs/Template_LBBDM_f4.yaml --train --sample_at_start --save_top --gpu_ids 0 
+python main.py --config configs/Template-BBDM_512.yaml --train --sample_at_start --save_top --gpu_ids 0
 ```
 
 If you wish to continue training, specify the model checkpoint path and optimizer checkpoint path in the train part.
 ```commandline
-python3 main.py --config configs/Template_LBBDM_f4.yaml --train --sample_at_start --save_top --gpu_ids 0 
+python main.py --config configs/Template-BBDM_512.yaml --train --sample_at_start --save_top --gpu_ids 0 
 --resume_model path/to/model_ckpt --resume_optim path/to/optim_ckpt
 ```
 
 If you wish to sample the whole test dataset to evaluate metrics
 ```commandline
-python3 main.py --config configs/Template_LBBDM_f4.yaml --sample_to_eval --gpu_ids 0 --resume_model path/to/model_ckpt
+python main.py --config configs/Template-BBDM_512.yaml --sample_to_eval --gpu_ids 0 --resume_model path/to/model_ckpt
 ```
 
 Note that optimizer checkpoint is not needed in test and specifying checkpoint path in commandline has higher priority than specifying in configuration file.
